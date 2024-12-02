@@ -1,6 +1,6 @@
 #include "philo.h"
 
-static int	is_full(t_philo *philos)
+/* static int	is_full(t_philo *philos)
 {
 	int	philos_finish;
 	int	i;
@@ -20,13 +20,16 @@ static int	is_full(t_philo *philos)
 	else
 		return (0);
 
-}
+} */
 
 static int	is_dead(t_philo philo)
 {
 	pthread_mutex_lock(&philo.data->lock_meal);
 	if (get_current_time() - philo.last_meal >= philo.tt_die)
+	{
+		pthread_mutex_unlock(&philo.data->lock_meal);
 		return (1);
+	}
 	pthread_mutex_unlock(&philo.data->lock_meal);
 	return (0);
 }
@@ -36,27 +39,32 @@ static int	philo_dead_finish(t_philo *philos)
 	int	i;
 
 	i = 0;
-	printf("hola\n");
-	printf("n %i\n", philos->data->n_philo);
 	while (i < philos->data->n_philo)
 	{
+		/* printf("mem %p\n", &philos[i]); */
 		pthread_mutex_lock(&philos->data->lock_dead);
 		if (is_dead(philos[i]) == 1)
 		{
-			philos->data->dead_flag = true;
-			return (pthread_mutex_unlock(&philos->data->lock_dead), 1);
+			philo_write("Dead", philos);
+			philos->data->dead_flag = 1;
+			pthread_mutex_unlock(&philos->data->lock_dead);
+			return (1);
 		}
 		pthread_mutex_unlock(&philos->data->lock_dead);
 		i++;
 	}
-	pthread_mutex_lock(&philos->data->lock_dead);
+	return (0);
+/* 	pthread_mutex_lock(&philos->data->lock_dead);
 	if (is_full(philos) == 1)
 	{
-		philos->data->dead_flag = true;
-		return (pthread_mutex_unlock(&philos->data->lock_dead), 1);
+		philos->data->dead_flag = 1;
+		pthread_mutex_unlock(&philos->data->lock_dead);
+		return (1);
 	}
 	else
-		return (pthread_mutex_unlock(&philos->data->lock_dead), 0);
+	{
+		pthread_mutex_unlock(&philos->data->lock_dead);
+	} */
 }
 
 void	*monitoring(void *arg)
@@ -66,9 +74,10 @@ void	*monitoring(void *arg)
 	philos = arg;
 	while (1)
 	{
-		printf("monitoring\n");
 		if (philo_dead_finish(philos) == 1)
 			break ;
+		//ft_usleep(100);
 	}
+	printf("monitoring\n");
 	return (arg);
 }

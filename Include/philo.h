@@ -6,7 +6,7 @@
 /*   By: anblanco <anblanco@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 18:14:15 by anblanco          #+#    #+#             */
-/*   Updated: 2024/12/01 16:28:35 by anblanco         ###   ########.fr       */
+/*   Updated: 2024/12/02 20:22:41 by anblanco         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@
 
 typedef struct data
 {
-	bool			dead_flag;
+	int			dead_flag;
 	int				n_philo;
 	int				nes_meals;
 	size_t			start;
@@ -33,13 +33,12 @@ typedef struct data
 	pthread_mutex_t	lock_meal;
 	pthread_mutex_t	lock_think;
 	pthread_mutex_t	forks[MAX_PHILOS];
-	pthread_t		monitoring;
+	pthread_t		monitor;
 }			t_data;
 
 typedef struct philo
 {
 	int				id;
-	//bool			eating;
 	int				meals;
 	size_t			start;
 	size_t			last_meal;
@@ -59,13 +58,13 @@ void	philo_write(char *str, t_philo *philo);
 size_t	get_current_time(void);
 void	ft_usleep(size_t milli);
 
-void	init_monitoring(t_philo *philos);
 int		arg_check( char **argv);
 void	*philo_daily(void *arg);
 void	pthreads(t_philo *philos);
 void	init_data(t_data *data, char **argv);
-void	init_philos(t_data *data, t_philo *philos, char **argv);
+void	init_philos(t_data data, t_philo *philos, char **argv);
 void	*monitoring(void *arg);
+void	rm_mutex(t_philo *philo);
 
 
 #endif

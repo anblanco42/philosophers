@@ -73,7 +73,7 @@ void	philo_write(char *str, t_philo *philo)
 
 	pthread_mutex_lock(&philo->data->lock_think);
 	time = get_current_time() - philo->start;
-	if (philo->data->dead_flag == false)
+	if (philo->data->dead_flag == 0)
 		printf("%zu %d %s\n", time, philo->id, str);
 	pthread_mutex_unlock(&philo->data->lock_think);
 }
