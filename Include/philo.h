@@ -6,7 +6,7 @@
 /*   By: anblanco <anblanco@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 18:14:15 by anblanco          #+#    #+#             */
-/*   Updated: 2024/12/02 20:22:41 by anblanco         ###   ########.fr       */
+/*   Updated: 2024/12/03 19:08:37 by anblanco         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ void	ft_usleep(size_t milli);
 
 int		arg_check( char **argv);
 void	*philo_daily(void *arg);
-void	pthreads(t_philo *philos);
+void	pthreads(t_philo *philos, t_data *data);
 void	init_data(t_data *data, char **argv);
 void	init_philos(t_data data, t_philo *philos, char **argv);
 void	*monitoring(void *arg);

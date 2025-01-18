@@ -10,6 +10,8 @@ static void	meals(t_philo *philo)
 	ft_usleep(philo->tt_eat);
 }
 
+// si solo hay un filo no termina el programa xdd
+
 static void	rutine(t_philo *philo)
 {
 	pthread_mutex_lock(philo->r_fork);
@@ -46,11 +48,9 @@ void	*philo_daily(void *arg)
 		ft_usleep(50);
 	while (check_dead(philo) != 1)
 	{
-/* 		printf("daily: %i\n", philo->data->n_philo); */
 		rutine(philo);
 		i++;
 	}
-/* 	printf("finish: %i\n", philo->id); */
 	return (arg);
 }
 
