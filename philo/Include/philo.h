@@ -6,7 +6,7 @@
 /*   By: anblanco <anblanco@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 18:14:15 by anblanco          #+#    #+#             */
-/*   Updated: 2024/12/03 19:08:37 by anblanco         ###   ########.fr       */
+/*   Updated: 2025/01/21 14:49:55 by anblanco         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@
 
 typedef struct data
 {
-	int			dead_flag;
+	int				dead_flag;
 	int				n_philo;
 	int				nes_meals;
 	size_t			start;
@@ -52,12 +52,10 @@ typedef struct philo
 	t_data			*data;
 }			t_philo;
 
-/* UTILS */
 int		ft_atoi(char *str);
 void	philo_write(char *str, t_philo *philo);
 size_t	get_current_time(void);
 void	ft_usleep(size_t milli);
-
 int		arg_check( char **argv);
 void	*philo_daily(void *arg);
 void	pthreads(t_philo *philos, t_data *data);
@@ -65,6 +63,5 @@ void	init_data(t_data *data, char **argv);
 void	init_philos(t_data data, t_philo *philos, char **argv);
 void	*monitoring(void *arg);
 void	rm_mutex(t_philo *philo);
-
 
 #endif
